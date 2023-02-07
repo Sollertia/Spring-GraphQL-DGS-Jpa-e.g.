@@ -1,11 +1,17 @@
 type Query {
     shows(titleFilter: String): [Show]
+    search(title: String): [Movie]
 }
 
 type Show {
     title: String
     releaseYear: Int
     reviews: [Review]
+}
+
+type Movie {
+    title: String
+    releaseYear: Int
 }
 
 type Review {

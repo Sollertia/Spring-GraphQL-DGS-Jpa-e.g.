@@ -1,5 +1,7 @@
 package com.example.myeongseongservertest.datafetchers;
 
+import com.example.demo.generated.client.ShowsGraphQLQuery;
+import com.example.demo.generated.client.ShowsProjectionRoot;
 import com.netflix.graphql.dgs.DgsQueryExecutor;
 import com.netflix.graphql.dgs.autoconfig.DgsAutoConfiguration;
 import com.netflix.graphql.dgs.client.codegen.GraphQLQueryRequest;
@@ -21,14 +23,17 @@ class ShowDataFetcherTest {
     @Test
     void shows() {
 
-//        new GraphQLQueryRequest()
+//        String query = "query {\n" +
+//                "\tshows(titleFilter: \"Wonbin\"){\n" +
+//                "    title\n" +
+//                "    releaseYear\n" +
+//                "  }\n" +
+//                "}";
 
-        String query = "query {\n" +
-                "\tshows(titleFilter: \"Wonbin\"){\n" +
-                "    title\n" +
-                "    releaseYear\n" +
-                "  }\n" +
-                "}";
+        GraphQLQueryRequest queryRequest = new GraphQLQueryRequest(ShowsGraphQLQuery.newRequest().titleFilter("Wonbin").build(),
+                new ShowsProjectionRoot().title());
+
+        String query = queryRequest.serialize();
 
         List<String> titles = queryExecutor.executeAndExtractJsonPath(query, "data.shows[*].title");
         assertThat(titles).contains("Wonbin");
