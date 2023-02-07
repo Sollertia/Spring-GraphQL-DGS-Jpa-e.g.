@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: myeongseong-server-test
+  profiles:
+    active: local
+    group:
+      local:
+      prod:
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+
+server:
+  port: 8081
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: "postgrespassword"
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+
